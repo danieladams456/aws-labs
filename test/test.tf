@@ -1,3 +1,7 @@
+variable "digitalocean_token" {}
+variable "cloudflare_email" {}
+variable "cloudflare_token" {}
+
 provider "digitalocean" {
   token = "${var.digitalocean_token}"
 }
@@ -29,3 +33,4 @@ resource "cloudflare_record" "testrecord_v6" {
   name = "terraformtest"
   type = "AAAA"
   value = "${digitalocean_droplet.testdroplet.ipv6_address}"
+}
