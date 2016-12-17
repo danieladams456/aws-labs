@@ -1,8 +1,13 @@
-variable "aws_route53_default_zoneid" {
-  default = "ZEMD7XEJVSLN3"
+/*
+#not supported until terraform 8
+data "aws_route53_zone" "dadams_io" {
+  name = "dadams.io."
 }
+*/
+
 resource "aws_route53_record" "www" {
-  zone_id = "${var.aws_route53_default_zoneid}"
+  #zone_id = "${data.aws_route53_zone.dadams_io.zone_id}"
+  zone_id = "ZEMD7XEJVSLN3"
   name = "testelb.dadams.io"
   type = "A"
 

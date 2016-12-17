@@ -1,12 +1,14 @@
-variable "aws_route53_default_zoneid" {
-  default = "ZEMD7XEJVSLN3"
-}
-
 provider "aws" {
   region = "us-east-1"
 }
 
 /*
+#not supported until terraform 8
+data "aws_hosted_zone" "dadams_io" {
+  name = "dadams.io."
+}
+*/
+
 data "aws_ami" "centos" {
   most_recent = true
   filter {
@@ -19,13 +21,13 @@ data "aws_ami" "centos" {
   }
   owners = ["679593333241"] # Centos
 }
-*/
 
 resource "aws_instance" "testinstance" {
-    ami = "ami-6d1c2007"  #Centos
+    #ami = "ami-6d1c2007"  #Centos
+    ami = "${data.aws_ami.centos.id}"
     instance_type = "t2.micro"
     vpc_security_group_ids = ["sg-6e386a13","sg-72b7eb0f"] #default, ping_ssh
-    key_name = "Laptop"
+    key_name = "Desktop"
     associate_public_ip_address = true
     tags {
         Name = "TerraformTest"
@@ -34,9 +36,10 @@ resource "aws_instance" "testinstance" {
 }
 
 resource "aws_route53_record" "testrecord" {
-  zone_id = "${var.aws_route53_default_zoneid}"
-  name = "terraformtest.dadams.io"
+  #zone_id = "${data.aws_hosted_zone.dadams_io.zone_id}"
+  zone_id = "ZEMD7XEJVSLN3"
+  name = "terraforminstance.dadams.io"
   type = "A"
   ttl = "300"
-  records = ["${aws_instance.web.public_ip}"]
+  records = ["${aws_instance.testinstance.public_ip}"]
 }
