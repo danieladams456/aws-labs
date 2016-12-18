@@ -1,12 +1,9 @@
-/*
-#not supported until terraform 8
 data "aws_route53_zone" "dadams_io" {
   name = "dadams.io."
 }
-*/
 
 resource "aws_route53_record" "testalb" {
-  zone_id = "ZEMD7XEJVSLN3"
+  zone_id = "${data.aws_route53_zone.dadams_io.zone_id}"
   name = "testalb.dadams.io"
   type = "A"
 
