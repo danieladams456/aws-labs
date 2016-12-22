@@ -1,5 +1,5 @@
-data "aws_acm_certificate" "star_dadams_io" {
-  domain = "*.dadams.io"
+data "aws_acm_certificate" "dadams_io" {
+  domain = "dadams.io"
   statuses = ["ISSUED"]
 }
 
@@ -19,7 +19,7 @@ resource "aws_elb" "testelb" {
     instance_protocol = "http"
     lb_port = 443
     lb_protocol = "https"
-    ssl_certificate_id = "${data.aws_acm_certificate.star_dadams_io.arn}"
+    ssl_certificate_id = "${data.aws_acm_certificate.dadams_io.arn}"
   }
 
   health_check {

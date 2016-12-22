@@ -1,5 +1,5 @@
-data "aws_acm_certificate" "star_dadams_io" {
-  domain = "*.dadams.io"
+data "aws_acm_certificate" "dadams_io" {
+  domain = "dadams.io"
   statuses = ["ISSUED"]
 }
 
@@ -20,7 +20,7 @@ resource "aws_alb_listener" "webtier_https" {
    port = "443"
    protocol = "HTTPS"
    ssl_policy = "ELBSecurityPolicy-2015-05"
-   certificate_arn = "${data.aws_acm_certificate.star_dadams_io.arn}"
+   certificate_arn = "${data.aws_acm_certificate.dadams_io.arn}"
 
    default_action {
      target_group_arn = "${aws_alb_target_group.webtier.arn}"
