@@ -1,12 +1,11 @@
 resource "aws_ecs_service" "test1" {
   name = "test1"
-  cluster = "${var.cluster_arn}"
+  cluster = "${aws_ecs_cluster.default.id}"
   task_definition = "${var.task_arn}"
-  iam_role = "${var.ecs_service_role_arn}"
   desired_count = 20
 
-  #TODO this has to be a terraform object I think, not an arn
-  #depends_on = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
+  iam_role = "${aws_iam_role.ecs_service.id}"
+  depends_on = ["aws_iam_role.ecs_service"]
 
   load_balancer {
     target_group_arn = "${aws_alb_target_group.ecs-service-test1.arn}"

@@ -11,10 +11,11 @@ data "terraform_remote_state" "s3_state" {
   }
 }
 
+variable "task_arn" {}
+variable "desired_cluster_size" {
+  default = 1
+}
+
 data "aws_vpc" "default" {
   default = true
 }
-
-variable "cluster_arn" {}
-variable "task_arn" {}
-variable "ecs_service_role_arn" {}
