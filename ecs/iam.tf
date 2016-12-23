@@ -22,7 +22,12 @@ resource "aws_iam_role_policy_attachment" "ecs_service_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
 }
 
+
 #allow instances to talk with scheduler
+resource "aws_iam_instance_profile" "ecs_instance" {
+  name = "ecs_instance"
+  roles = ["${aws_iam_role.ecs_instance.name}"]
+}
 resource "aws_iam_role" "ecs_instance" {
   name = "ecsInstanceRole"
   assume_role_policy = <<EOF

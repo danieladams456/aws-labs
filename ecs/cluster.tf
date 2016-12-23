@@ -7,8 +7,7 @@ resource "aws_launch_configuration" "ecs_default_cluster_instance" {
   image_id = "ami-fbacaaec"
   instance_type = "t2.micro"
   security_groups = ["sg-6e386a13"] #default VPC security group
-  iam_instance_profile = "debug"
-  #iam_instance_profile = "${aws_iam_role.ecs_instance.name}"
+  iam_instance_profile = "${aws_iam_instance_profile.ecs_instance.name}"
 }
  
 resource "aws_autoscaling_group" "ecs_default_cluster" {
