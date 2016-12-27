@@ -29,3 +29,12 @@ resource "aws_ecs_service" "nginx_app" {
     container_port = 80
   }
 }
+
+#non load balanced service
+resource "aws_ecs_service" "registry" {
+  name = "registry"
+  cluster = "${aws_ecs_cluster.default.id}"
+  task_definition = "${var.task_arn3}"
+  desired_count = 1
+
+}

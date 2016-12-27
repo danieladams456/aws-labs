@@ -13,6 +13,7 @@ data "terraform_remote_state" "s3_state" {
 
 variable "task_arn1" {}
 variable "task_arn2" {}
+variable "task_arn3" {}
 variable "desired_cluster_size" {
   default = 1
 }
