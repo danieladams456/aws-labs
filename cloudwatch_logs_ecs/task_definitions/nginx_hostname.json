@@ -1,0 +1,14 @@
+[
+  {
+    "name": "nginxhostname",
+    "image": "danieladams456/nginxhostname",
+    "cpu": 128,
+    "memoryReservation": 128,
+    "memory": 256,
+    "portMappings": [
+      {
+        "containerPort": 80
+      }
+    ]
+  }
+]
