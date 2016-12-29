@@ -9,6 +9,14 @@
       {
         "containerPort": 80
       }
-    ]
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region": "us-east-1",
+        "awslogs-group": "container-test",
+        "awslogs-stream-prefix": "nginx_hostname"
+      }
+    }
   }
 ]
