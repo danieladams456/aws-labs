@@ -1,6 +1,7 @@
 resource "aws_s3_bucket" "dadams-cloudtrail" {
   bucket = "dadams-cloudtrail"
   acl = "private"
+  force_destroy = true
   policy = <<POLICYEOF
 {
   "Version": "2012-10-17",
