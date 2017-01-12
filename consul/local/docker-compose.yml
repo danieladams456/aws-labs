@@ -1,0 +1,24 @@
+#seed server
+version: '2.0'
+
+services:
+  consul-1-ui:
+    image: consul
+    network_mode: host
+    command: agent -server -bind=172.17.0.1 -bootstrap-expect=5 -ui
+
+  consul-2:
+    image: consul
+    command: agent -server -retry-join=172.17.0.1 -bootstrap-expect=5
+
+  consul-3:
+    image: consul
+    command: agent -server -retry-join=172.17.0.1 -bootstrap-expect=5
+
+  consul-4:
+    image: consul
+    command: agent -server -retry-join=172.17.0.1 -bootstrap-expect=5
+
+  consul-5:
+    image: consul
+    command: agent -server -retry-join=172.17.0.1 -bootstrap-expect=5
