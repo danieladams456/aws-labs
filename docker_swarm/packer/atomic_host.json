@@ -1,0 +1,17 @@
+{
+  "builders": [{
+    "type": "amazon-ebs",
+    "region": "us-east-1",
+    "source_ami": "ami-cfeca0d8",
+    "instance_type": "t2.micro",
+    "ssh_username": "centos",
+    "ami_name": "atomic host2",
+    "communicator": "ssh",
+    "ssh_pty": "true"
+  }],
+  "provisioners": [{
+      "type": "shell",
+      "script": "install.sh",
+      "execute_command": "chmod +x {{ .Path }}; sudo {{ .Vars }} {{ .Path }}"
+  }]
+}
