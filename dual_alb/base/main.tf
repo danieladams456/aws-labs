@@ -10,11 +10,16 @@ provider "aws" {
   region = "us-east-1"
 }
 
-
-#security group with no ingress rules, it will just be used for a target of other security groups
+#define all security groups here so they can easily be hooked up to each other
 resource "aws_security_group" "ecs_cluster" {
   name = "sg_ecs_cluster"
   description = "Only all inbound from ALB security groups"
+  ingress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = ["${aws_security_group.external_alb.id}"]
+  }
   egress {
     from_port       = 0
     to_port         = 0
@@ -23,4 +28,41 @@ resource "aws_security_group" "ecs_cluster" {
   }
 }
 
-#put other security groups here so they can easily be hooked up
+resource "aws_security_group" "internal_service_discovery" {
+  name = "sg_internal_service_discovery"
+  description = "Used for ECS cluster and internal alb. Allow only traffic to/from itself (default behavior for no rules)"
+}
+
+resource "aws_security_group" "external_alb" {
+  name = "sg_external_alb"
+  description = "Only all inbound from ALB security groups"
+  ingress {
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+}
+
+
+output "sg_ecs_cluster_id" {
+  value = "${aws_security_group.ecs_cluster.id}"
+}
+output "sg_internal_service_discovery_id" {
+  value = "${aws_security_group.internal_service_discovery.id}"
+}
+output "sg_external_alb_id" {
+  value = "${aws_security_group.external_alb.id}"
+}
