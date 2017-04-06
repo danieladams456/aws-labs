@@ -20,7 +20,7 @@ resource "aws_alb_listener" "external_https" {
    certificate_arn = "${data.aws_acm_certificate.star_dadams_io.arn}"
 
    default_action {
-     target_group_arn = "${aws_alb_target_group.default_external.arn}"
+     target_group_arn = "${aws_alb_target_group.default_external_https.arn}"
      type = "forward"
    }
 }
@@ -31,13 +31,19 @@ resource "aws_alb_listener" "external_http" {
    protocol = "HTTP"
 
    default_action {
-     target_group_arn = "${aws_alb_target_group.default_external.arn}"
+     target_group_arn = "${aws_alb_target_group.default_external_http.arn}"
      type = "forward"
    }
 }
 
-resource "aws_alb_target_group" "default_external" {
-  name = "default-external"
+resource "aws_alb_target_group" "default_external-http" {
+  name = "default-external-http"
+  port = 80
+  protocol = "HTTP"
+  vpc_id = "${data.terraform_remote_state.base.vpc_id}"
+}
+resource "aws_alb_target_group" "default_external-https" {
+  name = "default-external-https"
   port = 80
   protocol = "HTTP"
   vpc_id = "${data.terraform_remote_state.base.vpc_id}"

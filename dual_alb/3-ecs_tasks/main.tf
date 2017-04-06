@@ -10,15 +10,22 @@ provider "aws" {
   region = "us-east-1"
 }
 
-#dont' know if this is needed here yet
-// data "terraform_remote_state" "base" {
-//   backend = "s3"
-//   config {
-//     bucket = "dadams-terraform_remote_state"
-//     key = "dual_alb/base.tfstate"
-//     region = "us-east-1"
-//   }
-// }
+data "terraform_remote_state" "alb" {
+  backend = "s3"
+  config {
+    bucket = "dadams-terraform_remote_state"
+    key = "dual_alb/alb.tfstate"
+    region = "us-east-1"
+  }
+}
+data "terraform_remote_state" "ecs_cluster" {
+  backend = "s3"
+  config {
+    bucket = "dadams-terraform_remote_state"
+    key = "dual_alb/ecs_cluster.tfstate"
+    region = "us-east-1"
+  }
+}
 
 #allow service to talk with ALB
 resource "aws_iam_role" "ecs_service" {

@@ -50,3 +50,7 @@ resource "aws_iam_role_policy_attachment" "ecs_instance_attachment" {
   role = "${aws_iam_role.ecs_instance.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
+
+output "ecs_cluster_id" {
+	value = "${aws_ecs_cluster.dual_alb_poc.id}"
+}
