@@ -20,7 +20,8 @@ EOF
 }
 
 resource "aws_autoscaling_group" "ecs_dual_alb_poc_cluster" {
-  availability_zones = ["us-east-1b", "us-east-1c"]
+  vpc_zone_identifier = ["${data.terraform_remote_state.base.subnet_us-east-1a}",
+                         "${data.terraform_remote_state.base.subnet_us-east-1b}"]
   name = "ecs_dual_alb_poc_cluster"
   launch_configuration = "${aws_launch_configuration.ecs_dual_alb_poc_cluster_instance.name}"
 

@@ -10,6 +10,10 @@ provider "aws" {
   region = "us-east-1"
 }
 
+data "aws_vpc" "default" {
+  default = true
+}
+
 #define all security groups here so they can easily be hooked up to each other
 resource "aws_security_group" "ecs_cluster" {
   name = "sg_ecs_cluster"
@@ -52,11 +56,24 @@ resource "aws_security_group" "external_alb" {
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
-    cidr_blocks     = ["0.0.0.0/0"]
+    security_groups = ["${aws_security_group.internal_service_discovery.id}"]
   }
 }
 
+#define subnets to launch instances in/tie to ALBs
+data "aws_subnet" "subnet_us-east-1a" {
+  availability_zone = "us-east-1a"
+  default_for_az = true
+}
+data "aws_subnet" "subnet_us-east-1b" {
+  availability_zone = "us-east-1b"
+  default_for_az = true
+}
 
+#outputs for use by other sub-projects
+output "vpc_id" {
+  value = "${data.aws_vpc.default.id}"
+}
 output "sg_ecs_cluster_id" {
   value = "${aws_security_group.ecs_cluster.id}"
 }
@@ -65,4 +82,10 @@ output "sg_internal_service_discovery_id" {
 }
 output "sg_external_alb_id" {
   value = "${aws_security_group.external_alb.id}"
+}
+output "subnet_us-east-1a" {
+  value = "${data.aws_subnet.subnet_us-east-1a.id}"
+}
+output "subnet_us-east-1b" {
+  value = "${data.aws_subnet.subnet_us-east-1b.id}"
 }

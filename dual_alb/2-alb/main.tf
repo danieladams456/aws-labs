@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "dadams-terraform_remote_state"
-    key = "dual_alb/ecs_cluster.tfstate"
+    key = "dual_alb/alb.tfstate"
     region = "us-east-1"
   }
 }
@@ -19,10 +19,6 @@ data "terraform_remote_state" "base" {
   }
 }
 
-data "aws_vpc" "default" {
-  default = true
-}
-
-variable "desired_cluster_size" {
-  default = 0
+data "aws_route53_zone" "dadams_io" {
+  name = "dadams.io."
 }
