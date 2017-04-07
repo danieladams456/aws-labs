@@ -1,0 +1,16 @@
+[
+  {
+    "name": "redirect",
+    "image": "pwillie/redirect-to-https:scratch",
+    "memory": 32,
+    "memoryReservation": 16,
+    "cpu": 64,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 8080,
+        "protocol": "tcp"
+      }
+    ]
+  }
+]

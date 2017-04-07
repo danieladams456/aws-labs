@@ -36,13 +36,13 @@ resource "aws_alb_listener" "external_http" {
    }
 }
 
-resource "aws_alb_target_group" "default_external-http" {
+resource "aws_alb_target_group" "default_external_http" {
   name = "default-external-http"
   port = 80
   protocol = "HTTP"
   vpc_id = "${data.terraform_remote_state.base.vpc_id}"
 }
-resource "aws_alb_target_group" "default_external-https" {
+resource "aws_alb_target_group" "default_external_https" {
   name = "default-external-https"
   port = 80
   protocol = "HTTP"
