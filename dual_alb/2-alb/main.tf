@@ -30,9 +30,18 @@ output "alb_internal_id" {
 output "alb_external_id" {
 	value = "${aws_alb.external.id}"
 }
-output "default_target_external_https" {
-	value = "${aws_alb_listener.external_https.id}"
+output "default_target_external_https_id" {
+	value = "${aws_alb_target_group.default_external_http.id}"
 }
-output "default_target_external_http" {
-	value = "${aws_alb_listener.external_http.id}"
+output "default_target_external_http_id" {
+	value = "${aws_alb_target_group.default_external_https.id}"
+}
+output "external_alb_listener_http_id" {
+  value = "${aws_alb_listener.external_http.id}"
+}
+output "external_alb_listener_https_id" {
+  value = "${aws_alb_listener.external_https.id}"
+}
+output "internal_alb_listener_http_id" {
+  value = "${aws_alb_listener.internal_http.id}"
 }

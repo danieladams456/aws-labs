@@ -1,0 +1,23 @@
+[
+  {
+    "name": "stock",
+    "image": "danieladams456/service-discovery-stubs:stock",
+    "memory": 128,
+    "memoryReservation": 64,
+    "cpu": 128,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 5000,
+        "protocol": "tcp"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region": "us-east-1",
+        "awslogs-group": "/ecs/stock_service"
+      }
+    }
+  }
+]
