@@ -35,6 +35,18 @@ resource "aws_security_group" "ecs_cluster" {
 resource "aws_security_group" "internal_service_discovery" {
   name = "sg_internal_service_discovery"
   description = "Used for ECS cluster and internal alb. Allow only traffic to/from itself (default behavior for no rules)"
+  ingress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    self = true
+  }
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    self = true
+  }
 }
 
 resource "aws_security_group" "external_alb" {

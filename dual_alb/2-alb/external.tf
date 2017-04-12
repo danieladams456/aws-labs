@@ -41,6 +41,10 @@ resource "aws_alb_target_group" "default_external_http" {
   port = 80
   protocol = "HTTP"
   vpc_id = "${data.terraform_remote_state.base.vpc_id}"
+  #this will be a redirect service, so expect 301-302
+  health_check {
+    matcher = "301-302"
+  }
 }
 resource "aws_alb_target_group" "default_external_https" {
   name = "default-external-https"

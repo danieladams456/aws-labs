@@ -20,7 +20,7 @@ data "terraform_remote_state" "base" {
 }
 
 variable "desired_cluster_size" {
-  default = 1
+  default = 2
 }
 
 #allow instances to talk with scheduler

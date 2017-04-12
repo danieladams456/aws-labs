@@ -54,7 +54,7 @@ resource "aws_ecs_service" "weather_service" {
   name = "weather_service"
   cluster = "${data.terraform_remote_state.ecs_cluster.ecs_cluster_id}"
   task_definition = "${aws_ecs_task_definition.weather_service.id}"
-  desired_count = 2
+  desired_count = 1
 
   iam_role = "${aws_iam_role.ecs_service.name}"
   depends_on = ["aws_iam_role.ecs_service"]
@@ -70,7 +70,7 @@ resource "aws_ecs_service" "stock_service" {
   name = "stock_service"
   cluster = "${data.terraform_remote_state.ecs_cluster.ecs_cluster_id}"
   task_definition = "${aws_ecs_task_definition.stock_service.id}"
-  desired_count = 2
+  desired_count = 1
 
   iam_role = "${aws_iam_role.ecs_service.name}"
   depends_on = ["aws_iam_role.ecs_service"]
