@@ -1,14 +1,14 @@
 [
   {
     "name": "redirect",
-    "image": "pwillie/redirect-to-https:scratch",
-    "memory": 32,
-    "memoryReservation": 16,
-    "cpu": 64,
+    "image": "camptocamp/https-redirect",
+    "memory": 128,
+    "memoryReservation": 64,
+    "cpu": 128,
     "essential": true,
     "portMappings": [
       {
-        "containerPort": 8080,
+        "containerPort": 80,
         "protocol": "tcp"
       }
     ]

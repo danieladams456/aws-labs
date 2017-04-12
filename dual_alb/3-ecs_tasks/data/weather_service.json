@@ -12,6 +12,9 @@
         "protocol": "tcp"
       }
     ],
+    "environment": [
+      { "name": "BASE_URL", "value": "http://services.internal.dadams.io" }
+    ],
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
