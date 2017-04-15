@@ -1,0 +1,14 @@
+VPC: 172.17.0.0/16
+
+Public Subnets:
+services_public_us_east_1a: 172.17.0.0/24
+services_public_us_east_1b: 172.17.1.0/24
+services_public_us_east_1c: 172.17.2.0/24
+services_public_us_east_1d: 172.17.3.0/24
+
+Private Subnets:
+services_private_us_east_1a: 172.17.16.0/24
+services_private_us_east_1b: 172.17.17.0/24
+services_private_us_east_1c: 172.17.18.0/24
+services_private_us_east_1d: 172.17.19.0/24
+

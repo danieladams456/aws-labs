@@ -6,8 +6,8 @@ resource "aws_launch_configuration" "ecs_dual_alb_poc_cluster_instance" {
   name_prefix = "ecs_dual_alb_poc_cluster_instance-"
   image_id = "ami-275ffe31"
   instance_type = "t2.micro"
-  security_groups = ["${data.terraform_remote_state.base.sg_ecs_cluster_id}",
-                     "${data.terraform_remote_state.base.sg_internal_service_discovery_id}"]
+  security_groups = ["${data.terraform_remote_state.vpc.sg_ecs_cluster_id}",
+                     "${data.terraform_remote_state.vpc.sg_internal_service_discovery_id}"]
   enable_monitoring = false #save some $ here
   iam_instance_profile = "${aws_iam_instance_profile.ecs_instance.name}"
   user_data = <<EOF
@@ -20,8 +20,10 @@ EOF
 }
 
 resource "aws_autoscaling_group" "ecs_dual_alb_poc_cluster" {
-  vpc_zone_identifier = ["${data.terraform_remote_state.base.subnet_us-east-1a}",
-                         "${data.terraform_remote_state.base.subnet_us-east-1b}"]
+  vpc_zone_identifier = ["${data.terraform_remote_state.vpc.subnet_private_us-east-1a}",
+                         "${data.terraform_remote_state.vpc.subnet_private_us-east-1b}",
+                         "${data.terraform_remote_state.vpc.subnet_private_us-east-1c}",
+                         "${data.terraform_remote_state.vpc.subnet_private_us-east-1d}",]
   name = "ecs_dual_alb_poc_cluster"
   launch_configuration = "${aws_launch_configuration.ecs_dual_alb_poc_cluster_instance.name}"
 

@@ -3,9 +3,11 @@
 resource "aws_alb" "internal" {
   name = "alb-internal"
   internal = true
-  security_groups = ["${data.terraform_remote_state.base.sg_internal_service_discovery_id}"]
-  subnets = ["${data.terraform_remote_state.base.subnet_us-east-1a}",
-             "${data.terraform_remote_state.base.subnet_us-east-1b}"]
+  security_groups = ["${data.terraform_remote_state.vpc.sg_internal_service_discovery_id}"]
+  subnets = ["${data.terraform_remote_state.vpc.subnet_private_us-east-1a}",
+             "${data.terraform_remote_state.vpc.subnet_private_us-east-1b}",
+             "${data.terraform_remote_state.vpc.subnet_private_us-east-1c}",
+             "${data.terraform_remote_state.vpc.subnet_private_us-east-1d}"]
 }
 
 resource "aws_alb_listener" "internal_http" {
@@ -23,7 +25,7 @@ resource "aws_alb_target_group" "default_internal" {
   name = "default-internal"
   port = 80
   protocol = "HTTP"
-  vpc_id = "${data.terraform_remote_state.base.vpc_id}"
+  vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
 }
 
 resource "aws_route53_record" "services_internal" {

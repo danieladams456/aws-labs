@@ -10,11 +10,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
-data "terraform_remote_state" "base" {
+data "terraform_remote_state" "vpc" {
   backend = "s3"
   config {
     bucket = "dadams-terraform_remote_state"
-    key = "dual_alb/base.tfstate"
+    key = "dual_alb/vpc.tfstate"
     region = "us-east-1"
   }
 }

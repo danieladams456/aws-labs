@@ -101,13 +101,13 @@ resource "aws_alb_target_group" "weather_service" {
   name = "weather-service"
   port = 80
   protocol = "HTTP"
-  vpc_id = "${data.terraform_remote_state.base.vpc_id}"
+  vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
 }
 resource "aws_alb_target_group" "stock_service" {
   name = "stock-service"
   port = 80
   protocol = "HTTP"
-  vpc_id = "${data.terraform_remote_state.base.vpc_id}"
+  vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
 }
 
 resource "aws_alb_listener_rule" "weather_service" {
