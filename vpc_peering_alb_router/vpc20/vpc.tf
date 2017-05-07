@@ -86,30 +86,32 @@ resource "aws_subnet" "vpc20_private_us-east-1d" {
 }
 
 ### IGW and NAT gateway to attach to routes ##################
-resource "aws_internet_gateway" "servces_igw" {
+resource "aws_internet_gateway" "igw" {
   vpc_id = "${aws_vpc.vpc20.id}"
   tags {
-    Name = "servces_igw"
+    Name = "igw"
   }
 }
 
 ### Route tables #############################################
 resource "aws_route_table" "vpc20_public" {
   vpc_id = "${aws_vpc.vpc20.id}"
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.servces_igw.id}"
-  }
   tags {
     Name = "vpc20_public"
   }
 }
-
 resource "aws_route_table" "vpc20_private" {
   vpc_id = "${aws_vpc.vpc20.id}"
   tags {
     Name = "vpc20_private"
   }
+}
+
+### Routes #####################################################
+resource "aws_route" "vpc20_public_default" {
+  route_table_id = "${aws_route_table.vpc20_public.id}"
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = "${aws_internet_gateway.igw.id}"
 }
 
 ### Route table associations ###################################
