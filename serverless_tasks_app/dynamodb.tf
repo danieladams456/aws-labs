@@ -1,0 +1,26 @@
+resource "aws_dynamodb_table" "basic-dynamodb-table" {
+  name = "TodoLists"
+  read_capacity = 1
+  write_capacity = 1
+
+  hash_key = "username"
+  range_key = "listname"
+
+  attribute {
+    name = "username"
+    type = "S"
+  }
+  attribute {
+    name = "listname"
+    type = "S"
+  }
+
+  #create index for just getting the lists a user has saved
+  local_secondary_index {
+    name = "username-listname-index"
+    range_key = "listname"
+    projection_type = "KEYS_ONLY"
+  }
+}
+#example query
+# aws dynamodb query --table-name TodoLists --index-name username-listname-index --key-condition-expression "username = :username" --expression-attribute-values '{":username":{"S":"daniel"}}'
