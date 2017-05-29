@@ -4,3 +4,6 @@
 
 # Credential files
 *.tfvars
+
+# Lambda payloads
+*.zip
