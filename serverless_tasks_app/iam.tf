@@ -17,7 +17,6 @@ resource "aws_iam_role" "get_lists_by_user" {
 EOF
 }
 
-#lambda still isn't logging
 resource "aws_iam_role_policy" "get_lists_by_user" {
   name = "dynamodb_query_todo_lists"
   role = "${aws_iam_role.get_lists_by_user.id}"

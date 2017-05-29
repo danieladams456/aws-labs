@@ -8,7 +8,7 @@ resource "aws_lambda_function" "get_lists_by_user" {
   function_name = "todoListSample_getListsByUser"
   description = "Returns a list of the user's ToDo lists from DynamoDB"
 
-  runtime = "python3.6"
+  runtime = "python2.7"
   handler = "get_lists_by_user.lambda_handler"
   filename = "${data.archive_file.get_lists_by_user.output_path}"
   source_code_hash = "${data.archive_file.get_lists_by_user.output_base64sha256}"
