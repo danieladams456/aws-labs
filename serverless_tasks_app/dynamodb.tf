@@ -22,5 +22,6 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
     projection_type = "KEYS_ONLY"
   }
 }
-#example query
+#example queries
 # aws dynamodb query --table-name TodoLists --index-name username-listname-index --key-condition-expression "username = :username" --expression-attribute-values '{":username":{"S":"daniel"}}'
+# aws dynamodb put-item --table-name TodoLists --return-consumed-capacity INDEXES --item '{"username":{"S":"daniel"}, "listname":{"S":"thirdlist"}, "items":{"L": [{"S":"one"}, {"S":"two"}, {"S":"three"}]}}'
