@@ -12,5 +12,11 @@ resource "aws_lambda_function" "get_lists_by_user" {
   handler = "get_lists_by_user.lambda_handler"
   filename = "${data.archive_file.get_lists_by_user.output_path}"
   source_code_hash = "${data.archive_file.get_lists_by_user.output_base64sha256}"
-  role = "${aws_iam_role.get_lists_by_user.arn}"
+  role = "${aws_iam_role.lambda_dynamo.arn}"
+  environment {
+    variables {
+      TODO_LIST_TABLE_NAME = "todoListSample_TodoLists"
+      TODO_LIST_INDEX_NAME = "username-listname-index"
+    }
+  }
 }
