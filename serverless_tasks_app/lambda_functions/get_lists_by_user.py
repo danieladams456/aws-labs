@@ -25,13 +25,10 @@ def get_lists_by_user(username):
 
 def lambda_handler(event, context):
     #print(json.dumps(event))
-    try:
-        username = event['params']['path']['username']
-        ret = get_lists_by_user(username)
-        print("returning lists for user " + username + ": " + str(ret))
-        return {'lists': ret}
-    except:
-        return {'message': 'Error getting lists'}
+    username = event['params']['path']['username']
+    lists = get_lists_by_user(username)
+    print("returning lists for user " + username + ": " + str(ret))
+    return {'lists': lists}
 
 #test code
 if __name__ == '__main__':

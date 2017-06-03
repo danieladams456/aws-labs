@@ -26,8 +26,14 @@ resource "aws_iam_role_policy" "get_lists_by_user" {
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": "dynamodb:Query",
-      "Resource": "arn:aws:dynamodb:us-east-1:225730437332:table/todoListSample_TodoLists*"
+      "Action": [
+        "dynamodb:Query",
+        "dynamodb:GetItem"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:us-east-1:225730437332:table/todoListSample_TodoLists",
+        "arn:aws:dynamodb:us-east-1:225730437332:table/todoListSample_TodoLists*"
+      ]
     },
     {
       "Effect": "Allow",
