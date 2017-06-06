@@ -27,7 +27,7 @@ def lambda_handler(event, context):
     #print(json.dumps(event))
     username = event['params']['path']['username']
     lists = get_lists_by_user(username)
-    print("returning lists for user " + username + ": " + str(ret))
+    print("returning lists for user " + username + ": " + json.dumps(lists))
     return {'lists': lists}
 
 #test code

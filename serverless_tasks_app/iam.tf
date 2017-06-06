@@ -28,12 +28,10 @@ resource "aws_iam_role_policy" "get_lists_by_user" {
       "Effect": "Allow",
       "Action": [
         "dynamodb:Query",
-        "dynamodb:GetItem"
+        "dynamodb:GetItem",
+        "dynamodb:DeleteItem"
       ],
-      "Resource": [
-        "arn:aws:dynamodb:us-east-1:225730437332:table/todoListSample_TodoLists",
-        "arn:aws:dynamodb:us-east-1:225730437332:table/todoListSample_TodoLists*"
-      ]
+      "Resource": "arn:aws:dynamodb:us-east-1:225730437332:table/todoListSample_*"
     },
     {
       "Effect": "Allow",
@@ -42,7 +40,7 @@ resource "aws_iam_role_policy" "get_lists_by_user" {
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
-      "Resource": "arn:aws:logs:us-east-1:225730437332:/aws/lambda*"
+      "Resource": "*"
     }
   ]
 }

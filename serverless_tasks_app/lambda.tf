@@ -31,6 +31,22 @@ resource "aws_lambda_function" "get_items_from_list" {
   }
 }
 
+resource "aws_lambda_function" "delete_list" {
+  function_name = "todoListSample_deleteList"
+  description = "Returns the items from a ToDo list stored in DynamoDB"
+
+  runtime = "python2.7"
+  handler = "delete_list.lambda_handler"
+  filename = "${data.archive_file.delete_list.output_path}"
+  source_code_hash = "${data.archive_file.delete_list.output_base64sha256}"
+  role = "${aws_iam_role.lambda_dynamo.arn}"
+  environment {
+    variables {
+      TODO_LIST_TABLE_NAME = "todoListSample_TodoLists"
+    }
+  }
+}
+
 data "archive_file" "get_lists_by_user" {
   type = "zip"
   source_file = "lambda_functions/get_lists_by_user.py"
@@ -40,4 +56,9 @@ data "archive_file" "get_items_from_list" {
   type = "zip"
   source_file = "lambda_functions/get_items_from_list.py"
   output_path = "lambda_functions/payloads/get_items_from_list.zip"
+}
+data "archive_file" "delete_list" {
+  type = "zip"
+  source_file = "lambda_functions/delete_list.py"
+  output_path = "lambda_functions/payloads/delete_list.zip"
 }

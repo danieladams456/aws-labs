@@ -10,24 +10,23 @@ TODO_LIST_TABLE_NAME = os.environ['TODO_LIST_TABLE_NAME']
 dynamodb = boto3.resource('dynamodb')
 todoLists = dynamodb.Table(TODO_LIST_TABLE_NAME)
 
-def get_items_from_list(username, listname):
+def delete_list(username, listname):
     # print('getting todo list ' + listname + ' for user ' + username)
     keyMap = {'username': username, 'listname': listname}
-    getItemResult = todoLists.get_item(Key = keyMap)
+    deleteListResult = todoLists.delete_item(Key = keyMap)
 
-    assert getItemResult['ResponseMetadata']['HTTPStatusCode'] == 200, 'Dynamo didn\'t return HTTP 200'
-    itemList = getItemResult['Item'].get('items')
-    return itemList if itemList is not None else []
+    assert deleteListResult['ResponseMetadata']['HTTPStatusCode'] == 200, 'Dynamo didn\'t return HTTP 200'
+    return 'success'
 
 
 def lambda_handler(event, context):
     #print(json.dumps(event))
     username = event['params']['path']['username']
     listname = event['params']['path']['listname']
-    items = get_items_from_list(username, listname)
+    deleteListResult = delete_list(username, listname)
 
-    print('returning items for user ' + username + ' in list ' + listname + ': '+ json.dumps(items))
-    return {'items': items}
+    print('deleted ' + listname + ' for user ' + username + ': ' + deleteListResult)
+    return {'status': deleteListResult}
 
 #test code
 if __name__ == '__main__':
