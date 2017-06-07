@@ -79,6 +79,22 @@ resource "aws_lambda_function" "add_items_to_list" {
   }
 }
 
+resource "aws_lambda_function" "delete_items_by_index" {
+  function_name = "todoListSample_deleteItemsByIndex"
+  description = "Returns the items from a ToDo list stored in DynamoDB"
+
+  runtime = "python2.7"
+  handler = "delete_items_by_index.lambda_handler"
+  filename = "${data.archive_file.delete_items_by_index.output_path}"
+  source_code_hash = "${data.archive_file.delete_items_by_index.output_base64sha256}"
+  role = "${aws_iam_role.lambda_dynamo.arn}"
+  environment {
+    variables {
+      TODO_LIST_TABLE_NAME = "todoListSample_TodoLists"
+    }
+  }
+}
+
 
 
 #zippers
@@ -106,4 +122,9 @@ data "archive_file" "add_items_to_list" {
   type = "zip"
   source_file = "lambda_functions/add_items_to_list.py"
   output_path = "lambda_functions/payloads/add_items_to_list.zip"
+}
+data "archive_file" "delete_items_by_index" {
+  type = "zip"
+  source_file = "lambda_functions/delete_items_by_index.py"
+  output_path = "lambda_functions/payloads/delete_items_by_index.zip"
 }

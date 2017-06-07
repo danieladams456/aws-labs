@@ -13,8 +13,6 @@ todoLists = dynamodb.Table(TODO_LIST_TABLE_NAME)
 #items should be a list to append to the existing list in DynamoDB
 def add_items_to_list(username, listname, items):
     keyMap = {'username': username, 'listname': listname}
-    #code here will create a new list if it isn't there for some reason
-    #TODO isn't working quite right
     updateExpression = 'SET listitems = list_append(if_not_exists(listitems, :empty_list), :newItems)'
     expressionAttributeValues = {':newItems': items, ':empty_list': []}
     addItemsResult = todoLists.update_item(Key = keyMap,
