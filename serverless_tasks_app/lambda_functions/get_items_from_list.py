@@ -16,8 +16,10 @@ def get_items_from_list(username, listname):
     getItemResult = todoLists.get_item(Key = keyMap)
 
     assert getItemResult['ResponseMetadata']['HTTPStatusCode'] == 200, 'Dynamo didn\'t return HTTP 200'
-    itemList = getItemResult['Item'].get('items')
-    return itemList if itemList is not None else []
+    if 'Item' in getItemResult and 'listitems' in getItemResult['Item']:
+        return getItemResult['Item']['listitems']
+    else:
+        return []
 
 
 def lambda_handler(event, context):

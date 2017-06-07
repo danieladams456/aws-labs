@@ -29,6 +29,8 @@ resource "aws_iam_role_policy" "get_lists_by_user" {
       "Action": [
         "dynamodb:Query",
         "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
         "dynamodb:DeleteItem"
       ],
       "Resource": "arn:aws:dynamodb:us-east-1:225730437332:table/todoListSample_*"
