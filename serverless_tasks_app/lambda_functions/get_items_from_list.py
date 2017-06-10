@@ -24,8 +24,8 @@ def get_items_from_list(username, listname):
 
 def lambda_handler(event, context):
     #print(json.dumps(event))
-    username = event['params']['path']['username']
-    listname = event['params']['path']['listname']
+    username = event['username']
+    listname = event['listname']
     items = get_items_from_list(username, listname)
 
     print('returning items for user ' + username + ' in list ' + listname + ': '+ json.dumps(items))
@@ -33,4 +33,4 @@ def lambda_handler(event, context):
 
 #test code
 if __name__ == '__main__':
-    lambda_handler({'params': {'path': {'username': 'dadams', 'listname': 'test'}}}, None)
+    lambda_handler({'username': 'dadams', 'listname': 'test'}, None)

@@ -26,9 +26,9 @@ def add_items_to_list(username, listname, items):
 
 def lambda_handler(event, context):
     #print(json.dumps(event))
-    username = event['params']['path']['username']
-    listname = event['params']['path']['listname']
-    items = event['body-json']['items']
+    username = event['username']
+    listname = event['listname']
+    items = event['items']
     addItemsResult = add_items_to_list(username, listname, items)
 
     print('added ' + json.dumps(items) + ' to list ' + listname + ' for user ' + username)
@@ -36,4 +36,4 @@ def lambda_handler(event, context):
 
 #test code
 if __name__ == '__main__':
-    lambda_handler({'params': {'path': {'username': 'dadams', 'listname': 'test'}, 'body-json': {'items': ['eight', 'seven']}}}, None)
+    lambda_handler({'username': 'dadams', 'listname': 'test', 'items': ['one', 'two']}, None)
