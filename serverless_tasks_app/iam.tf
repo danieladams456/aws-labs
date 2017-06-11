@@ -43,6 +43,11 @@ resource "aws_iam_role_policy" "get_lists_by_user" {
         "logs:PutLogEvents"
       ],
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "lambda:InvokeFunction",
+      "Resource": "arn:aws:lambda:us-east-1:225730437332:function:todoListSample_*"
     }
   ]
 }

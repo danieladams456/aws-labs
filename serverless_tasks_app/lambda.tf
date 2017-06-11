@@ -95,6 +95,17 @@ resource "aws_lambda_function" "delete_items_by_index" {
   }
 }
 
+resource "aws_lambda_function" "lex_bot" {
+  function_name = "todoListSample_lexBot"
+  description = "Returns the items from a ToDo list stored in DynamoDB"
+
+  runtime = "python2.7"
+  handler = "lex_bot.lambda_handler"
+  filename = "${data.archive_file.lex_bot.output_path}"
+  source_code_hash = "${data.archive_file.lex_bot.output_base64sha256}"
+  role = "${aws_iam_role.lambda_dynamo.arn}"
+}
+
 
 
 #zippers
@@ -127,4 +138,9 @@ data "archive_file" "delete_items_by_index" {
   type = "zip"
   source_file = "lambda_functions/delete_items_by_index.py"
   output_path = "lambda_functions/payloads/delete_items_by_index.zip"
+}
+data "archive_file" "lex_bot" {
+  type = "zip"
+  source_file = "lambda_functions/lex_bot.py"
+  output_path = "lambda_functions/payloads/lex_bot.zip"
 }
