@@ -24,7 +24,7 @@ def lambda_handler(event, context):
     print(json.dumps(event))
     username = event['username']
     listname = event['listname']
-    items = event['items']
+    items = event['items'] if 'items' in event else None
     addListResult = put_list(username, listname, items)
 
     print('put list ' + ' for user ' + username + ' with items: ' + json.dumps(items))
