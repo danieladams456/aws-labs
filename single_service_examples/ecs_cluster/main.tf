@@ -1,14 +1,13 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
-data "terraform_remote_state" "s3_state" {
-  backend = "s3"
-  config {
+terraform {
+  backend "s3" {
     bucket = "dadams-terraform_remote_state"
-    key = "ecs/terraform.tfstate"
+    key    = "ecs/terraform.tfstate"
     region = "us-east-1"
   }
+}
+
+provider "aws" {
+  region = "us-east-1"
 }
 
 variable "desired_cluster_size" {

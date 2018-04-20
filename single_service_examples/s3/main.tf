@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "dadams-terraform_remote_state"
-    key    = "sns_sqs/terraform.tfstate"
+    key    = "s3/terraform.tfstate"
     region = "us-east-1"
   }
 }
