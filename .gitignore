@@ -1,9 +1,4 @@
-# Compiled files
-*.tfstate
-*.tfstate.backup
-
-# Credential files
-*.tfvars
+.terraform
 
 # Lambda payloads
 *.zip
